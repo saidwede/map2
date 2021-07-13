@@ -1,3 +1,4 @@
+var id = 2;
 var data=[
     {
         num: '2',
@@ -32,7 +33,8 @@ var data=[
         progressreport: ' APRIL 2021 | 9',
         pic: 'img/home3.jpg'
     }
-]
+];
+markers = [];
 var num = document.getElementById('num');
 var title = document.getElementById('title');
 var shortdesc = document.getElementById('shortdesc'); 
@@ -53,48 +55,92 @@ startdate.innerText = data[0].startdate;
 progressreport.innerText = data[0].progressreport;
 pic.src = data[0].pic;
 
+var blackIcon = L.icon({
+    iconUrl: 'img/marker0.png',
+    iconSize:     [35, 50], // size of the icon
+    iconAnchor:   [22, 49], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -47] // point from which the popup should open relative to the iconAnchor
+});
+var alphaIcon = L.icon({
+    iconUrl: 'img/marker1.png',
+    iconSize:     [35, 50], // size of the icon
+    iconAnchor:   [22, 49], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -47] // point from which the popup should open relative to the iconAnchor
+});
+
 var map = L.map('mapid').setView([-33.8140015, 151.0430135], 11);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-L.marker([-33.8358020, 150.9865196]).addTo(map)
-    .bindPopup('Ingleburn Rd')
-    .on('click', () => {
-        num.innerText = data[0].num;
-        title.innerText = data[0].title;
-        shortdesc.innerText = data[0].shortdesc;
-        desc.innerText = data[0].desc;
-        profit1.innerText = data[0].profit1;
-        profit2.innerText = data[0].profit2;
-        startdate.innerText = data[0].startdate;
-        progressreport.innerText = data[0].progressreport;
-        pic.src = data[0].pic;
+markers.push(L.marker([-33.8358020, 150.9865196], {icon: alphaIcon}).addTo(map)
+.bindPopup('Ingleburn Rd')
+.on('click', (event) => {
+    num.innerText = data[0].num;
+    title.innerText = data[0].title;
+    shortdesc.innerText = data[0].shortdesc;
+    desc.innerText = data[0].desc;
+    profit1.innerText = data[0].profit1;
+    profit2.innerText = data[0].profit2;
+    startdate.innerText = data[0].startdate;
+    progressreport.innerText = data[0].progressreport;
+    pic.src = data[0].pic;
+    markers.forEach(element => {
+        element.setIcon(alphaIcon);
     });
-L.marker([-33.8540015, 151.0430135]).addTo(map)
-    .bindPopup('Pope St')
-    .on('click', () => {
-        num.innerText = data[1].num;
-        title.innerText = data[1].title;
-        shortdesc.innerText = data[1].shortdesc;
-        desc.innerText = data[1].desc;
-        profit1.innerText = data[1].profit1;
-        profit2.innerText = data[1].profit2;
-        startdate.innerText = data[1].startdate;
-        progressreport.innerText = data[1].progressreport;
-        pic.src = data[1].pic;
+    event.target.setIcon(blackIcon);
+}));
+markers.push(L.marker([-33.8540015, 151.0430135], {icon: alphaIcon}).addTo(map)
+.bindPopup('Pope St')
+.on('click', (event) => {
+    num.innerText = data[1].num;
+    title.innerText = data[1].title;
+    shortdesc.innerText = data[1].shortdesc;
+    desc.innerText = data[1].desc;
+    profit1.innerText = data[1].profit1;
+    profit2.innerText = data[1].profit2;
+    startdate.innerText = data[1].startdate;
+    progressreport.innerText = data[1].progressreport;
+    pic.src = data[1].pic;
+    markers.forEach(element => {
+        element.setIcon(alphaIcon);
     });
-    L.marker([-33.7932162, 151.1100844]).addTo(map)
-    .bindPopup('Auburn Rd')
-    .on('click', () => {
-        num.innerText = data[2].num;
-        title.innerText = data[2].title;
-        shortdesc.innerText = data[2].shortdesc;
-        desc.innerText = data[2].desc;
-        profit1.innerText = data[2].profit1;
-        profit2.innerText = data[2].profit2;
-        startdate.innerText = data[2].startdate;
-        progressreport.innerText = data[2].progressreport;
-        pic.src = data[2].pic;
+    event.target.setIcon(blackIcon);
+}));
+markers.push(L.marker([-33.7932162, 151.1100844], {icon: alphaIcon}).addTo(map)
+.bindPopup('Auburn Rd')
+.on('click', (event) => {
+    num.innerText = data[2].num;
+    title.innerText = data[2].title;
+    shortdesc.innerText = data[2].shortdesc;
+    desc.innerText = data[2].desc;
+    profit1.innerText = data[2].profit1;
+    profit2.innerText = data[2].profit2;
+    startdate.innerText = data[2].startdate;
+    progressreport.innerText = data[2].progressreport;
+    pic.src = data[2].pic;
+    markers.forEach(element => {
+        element.setIcon(alphaIcon);
     });
+    event.target.setIcon(blackIcon);
+}));
+
+let url = new URL(window.location.href);
+let params = new URLSearchParams(url.search);
+if(params.has('k')){
+    id = Number.parseInt(params.get('k'));
+}
+
+
+
+markers[id].setIcon(blackIcon);
+num.innerText = data[id].num;
+title.innerText = data[id].title;
+shortdesc.innerText = data[id].shortdesc;
+desc.innerText = data[id].desc;
+profit1.innerText = data[id].profit1;
+profit2.innerText = data[id].profit2;
+startdate.innerText = data[id].startdate;
+progressreport.innerText = data[id].progressreport;
+pic.src = data[id].pic;
